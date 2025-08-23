@@ -419,7 +419,7 @@ unsigned int GetSize(const BufferInfo &info, unsigned int alignedw, unsigned int
         size = ALIGN(alignedw * alignedh * 2, SIZE_4K);
         break;
       case HAL_PIXEL_FORMAT_NV12_LINEAR_FLEX:
-        size = VENUS_BUFFER_SIZE(COLOR_FMT_NV12_128, width, height);
+        size = VENUS_BUFFER_SIZE(COLOR_FMT_NV12_MVTB, width, height);
         break;
       case HAL_PIXEL_FORMAT_YCbCr_420_SP_VENUS:
       case HAL_PIXEL_FORMAT_NV12_ENCODEABLE:
@@ -427,7 +427,7 @@ unsigned int GetSize(const BufferInfo &info, unsigned int alignedw, unsigned int
         break;
       case HAL_PIXEL_FORMAT_YCrCb_420_SP_VENUS:
       case HAL_PIXEL_FORMAT_NV21_ENCODEABLE:
-        size = VENUS_BUFFER_SIZE(COLOR_FMT_NV21, width, height);
+        size = VENUS_BUFFER_SIZE(COLOR_FMT_NV12_MVTB, width, height);
         break;
       case HAL_PIXEL_FORMAT_BLOB:
         if (height != 1) {
@@ -584,7 +584,7 @@ void GetYuvSPPlaneInfo(const BufferInfo &info, int format, uint32_t width, uint3
       break;
 #ifndef QMAA
     case HAL_PIXEL_FORMAT_NV12_LINEAR_FLEX:
-      c_height = VENUS_UV_SCANLINES(COLOR_FMT_NV12_128, height);
+      c_height = VENUS_UV_SCANLINES(COLOR_FMT_NV12_MVTB, height);
       c_size = c_stride * c_height;
       break;
     case HAL_PIXEL_FORMAT_YCbCr_420_SP_VENUS:
@@ -602,7 +602,7 @@ void GetYuvSPPlaneInfo(const BufferInfo &info, int format, uint32_t width, uint3
       break;
     case HAL_PIXEL_FORMAT_YCrCb_420_SP_VENUS:
     case HAL_PIXEL_FORMAT_NV21_ENCODEABLE:
-      c_height = VENUS_UV_SCANLINES(COLOR_FMT_NV21, height);
+      c_height = VENUS_UV_SCANLINES(COLOR_FMT_NV12_MVTB, height);
       c_size = c_stride * c_height;
       break;
 #endif
@@ -1180,8 +1180,8 @@ void GetAlignedWidthAndHeight(const BufferInfo &info, unsigned int *alignedw,
       aligned_h = INT(VENUS_Y_SCANLINES(COLOR_FMT_P010, height));
       break;
     case HAL_PIXEL_FORMAT_NV12_LINEAR_FLEX:
-      aligned_w = INT(VENUS_Y_STRIDE(COLOR_FMT_NV12_128, width));
-      aligned_h = INT(VENUS_Y_SCANLINES(COLOR_FMT_NV12_128, height));
+      aligned_w = INT(VENUS_Y_STRIDE(COLOR_FMT_NV12_MVTB, width));
+      aligned_h = INT(VENUS_Y_SCANLINES(COLOR_FMT_NV12_MVTB, height));
       break;
     case HAL_PIXEL_FORMAT_YCbCr_420_SP_VENUS:
     case HAL_PIXEL_FORMAT_NV12_ENCODEABLE:
@@ -1190,8 +1190,8 @@ void GetAlignedWidthAndHeight(const BufferInfo &info, unsigned int *alignedw,
       break;
     case HAL_PIXEL_FORMAT_YCrCb_420_SP_VENUS:
     case HAL_PIXEL_FORMAT_NV21_ENCODEABLE:
-      aligned_w = INT(VENUS_Y_STRIDE(COLOR_FMT_NV21, width));
-      aligned_h = INT(VENUS_Y_SCANLINES(COLOR_FMT_NV21, height));
+      aligned_w = INT(VENUS_Y_STRIDE(COLOR_FMT_NV12_MVTB, width));
+      aligned_h = INT(VENUS_Y_SCANLINES(COLOR_FMT_NV12_MVTB, height));
       break;
     case HAL_PIXEL_FORMAT_BLOB:
       break;
