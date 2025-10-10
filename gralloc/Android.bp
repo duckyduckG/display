@@ -1,3 +1,4 @@
+//libgrallocutils
 cc_library_shared {
     name: "libgrallocutils",
     defaults: ["display_defaults"],
@@ -38,5 +39,51 @@ cc_library_shared {
     header_libs: [
         "display_headers",
         "device_kernel_headers",
+    ],
+}
+
+//libgralloccore
+cc_library_shared {
+    name: "libgralloccore",
+    defaults: [
+        "display_defaults",
+    ],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    header_libs: [
+        "display_headers",
+    ],
+    include_dirs: [
+        "system/memory/libion/include",
+        "system/memory/libion/kernel-headers",
+    ],
+    shared_libs: [
+        "libqdMetaData",
+        "libdl",
+        "libgrallocutils",
+        "libgralloctypes",
+        "libgralloc.qti",
+        "libhidlbase",
+        "libion",
+        "android.hardware.graphics.mapper@2.1",
+        "android.hardware.graphics.mapper@3.0",
+        "android.hardware.graphics.mapper@4.0",
+    ],
+    cflags: [
+        "-DLOG_TAG=\"qdgralloc\"",
+        "-D__QTI_DISPLAY_GRALLOC__",
+        "-Wno-sign-conversion",
+        "-Wno-unused-parameter",
+    ],
+    export_cflags: select(soong_config_variable("qtidisplay", "gralloc_handle_has_reserved_size"), {
+        "true": ["-DGRALLOC_HANDLE_HAS_RESERVED_SIZE"],
+        default: [],
+    }),
+    srcs: [
+        "gr_allocator.cpp",
+        "gr_buf_mgr.cpp",
+        "gr_ion_alloc.cpp",
     ],
 }

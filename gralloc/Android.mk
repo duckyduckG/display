@@ -34,34 +34,6 @@ LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 LOCAL_SRC_FILES               := gr_device_impl.cpp
 include $(BUILD_SHARED_LIBRARY)
 
-#libgralloccore
-include $(CLEAR_VARS)
-LOCAL_MODULE                  := libgralloccore
-LOCAL_SANITIZE                := integer_overflow
-LOCAL_VENDOR_MODULE           := true
-LOCAL_MODULE_TAGS             := optional
-LOCAL_C_INCLUDES              := $(common_includes) \
-                                 $(LIBION_HEADER_PATHS) \
-                                 $(kernel_includes)
-
-LOCAL_HEADER_LIBRARIES        := display_headers
-LOCAL_SHARED_LIBRARIES        := $(common_libs) libqdMetaData libdl libgrallocutils libion libgralloctypes \
-                                  libgralloc.qti libhidlbase \
-                                  android.hardware.graphics.mapper@2.1 \
-                                  android.hardware.graphics.mapper@3.0 \
-                                  android.hardware.graphics.mapper@4.0
-LOCAL_CFLAGS                  := $(common_flags) $(qmaa_flags) -DLOG_TAG=\"qdgralloc\" -Wno-sign-conversion \
-                                 -D__QTI_DISPLAY_GRALLOC__
-ifneq ($(TARGET_USES_GRALLOC4),false)
-LOCAL_CFLAGS                  += -DTARGET_USES_GRALLOC4
-endif
-ifeq ($(TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE),true)
-LOCAL_CFLAGS                  += -DGRALLOC_HANDLE_HAS_RESERVED_SIZE
-endif
-LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
-LOCAL_SRC_FILES               := gr_allocator.cpp gr_buf_mgr.cpp gr_ion_alloc.cpp
-include $(BUILD_SHARED_LIBRARY)
-
 #mapper
 include $(CLEAR_VARS)
 LOCAL_MODULE                  := android.hardware.graphics.mapper@3.0-impl-qti-display
