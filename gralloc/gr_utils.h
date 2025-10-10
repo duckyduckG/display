@@ -53,6 +53,9 @@
 #define INT(exp) static_cast<int>(exp)
 #define UINT(exp) static_cast<unsigned int>(exp)
 
+/* For SDM845, SM8150 or older soc */
+#define TARGET_LEGACY_CAMERA 1
+
 using android::hardware::graphics::common::V1_1::BufferUsage;
 
 namespace gralloc {

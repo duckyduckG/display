@@ -1,15 +1,14 @@
 //libgrallocutils
 cc_library_shared {
     name: "libgrallocutils",
-    defaults: ["display_defaults"],
+    defaults: ["qtidisplay_defaults"],
     vendor: true,
     sanitize: {
         integer_overflow: true,
     },
-    srcs: [
-        "gr_utils.cpp",
-        "gr_adreno_info.cpp",
-        "gr_camera_info.cpp",
+
+    header_libs: [
+        "display_headers",
     ],
     shared_libs: [
         "libqdMetaData",
@@ -29,16 +28,17 @@ cc_library_shared {
     ] + select(soong_config_variable("qtidisplay", "target_no_raw10_custom_format"), {
         "true": ["-DNO_RAW10_CUSTOM_FORMAT"],
         default: [],
-    }) + select(soong_config_variable("qtidisplay", "target_uses_ycrcb_camera_encode"), {
-        "true": ["-DUSE_YCRCB_CAMERA_ENCODE"],
+    }) + select(soong_config_variable("qtidisplay", "target_uses_ycrcb_camera_preview"), {
+        "true": ["-DUSE_YCRCB_CAMERA_PREVIEW"],
         default: [],
     }) + select(soong_config_variable("qtidisplay", "target_uses_ycrcb_venus_camera_preview"), {
         "true": ["-DUSE_YCRCB_CAMERA_PREVIEW_VENUS"],
         default: [],
     }),
-    header_libs: [
-        "display_headers",
-        "device_kernel_headers",
+    srcs: [
+        "gr_utils.cpp",
+        "gr_adreno_info.cpp",
+        "gr_camera_info.cpp",
     ],
 }
 
@@ -46,7 +46,7 @@ cc_library_shared {
 cc_library_shared {
     name: "libgralloccore",
     defaults: [
-        "display_defaults",
+        "qtidisplay_defaults",
     ],
     sanitize: {
         integer_overflow: true,
