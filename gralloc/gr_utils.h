@@ -50,6 +50,7 @@
 #define SECURE_ALIGN SZ_4K
 #endif
 
+#define TARGET_LEGACY_CAMERA 1
 #define INT(exp) static_cast<int>(exp)
 #define UINT(exp) static_cast<unsigned int>(exp)
 
